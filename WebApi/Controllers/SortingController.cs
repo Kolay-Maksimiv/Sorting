@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using WebApi.Model;
 using WebApi.ViewModel;
@@ -28,15 +30,50 @@ namespace WebApi.Controllers
         [ProducesResponseType(404)]
         public IActionResult GetSorting()
         {
-
+            var dataCombSorts = _context.dataCombSorts;
+            var dataQuickSortings = _context.dataQuickSortings;
 
             var sortingViewModel = new SortingViewModel()
-            {
-                CombSortArray = GetCombSort(),
-                QuickSortingArray = GetQuickSorting()
+            {   dataSoring = GetDataSoring(),
+                //dataQuickSortings = dataQuickSortings,
+                //dataCombSorts = dataCombSorts,
+                combSortArray = GetCombSort(),
+                quickSortingArray = GetQuickSorting()
             };
 
             return Ok(sortingViewModel);
+        }
+
+
+        private async Task<LineChartResponce<LineChartViewMode>> GetDataSoring()
+        {
+
+            var dataSoring = new LineChartResponce<LineChartViewMode>
+            {
+                Data = new List<LineChartViewMode>() {
+                    new LineChartViewMode()
+                    {
+                        Name = "CombSort",
+                        Series = _context.dataCombSorts.Select(x => new NameValueViewMode()
+                        {
+                            Name = x.combSortID,
+                            Value = x.combSortTime
+                        }).ToList()
+                    },
+                    new LineChartViewMode()
+                    {
+                        Name = "GetCombSort",
+                        Series = _context.dataQuickSortings.Select(x => new NameValueViewMode()
+                        {
+                            Name = x.quickSortingID,
+                            Value = x.quickSortingTime
+                        }).ToList()
+                    }
+                }
+
+            };
+
+            return dataSoring;
         }
         /// <summary>
         /// GetCombSort
@@ -48,7 +85,7 @@ namespace WebApi.Controllers
             clock.Start();
             int[] CombSortArray = CombSort(RandomNumber());
             clock.Stop();
-            string execution_time = $"Час сортування гребінцем:  {clock.Elapsed}";
+            double execution_time = (double)(clock.Elapsed.Ticks * 0.0001);
 
             var combSortViewModel = new CombSortViewModel
             {
@@ -56,6 +93,12 @@ namespace WebApi.Controllers
                 executionTime = execution_time
 
             };
+
+            var dataCombSort = new DataCombSort();
+            dataCombSort.combSortTime = execution_time;
+            _context.dataCombSorts.Add(dataCombSort);
+            _context.SaveChanges();
+
             return Ok(combSortViewModel);
         }
         /// <summary>
@@ -68,7 +111,7 @@ namespace WebApi.Controllers
             clock.Start();
             int[] QuickSortingArray = QuickSorting(RandomNumber());
             clock.Stop();
-            string execution_time = $"Час сортування Гоара: {clock.Elapsed}";
+            double execution_time = (double)(clock.Elapsed.Ticks * 0.0001);
 
             var quickSortingViewModel = new QuickSortingViewModel
             {
@@ -76,6 +119,12 @@ namespace WebApi.Controllers
                 executionTime = execution_time
 
             };
+
+            var dataQuickSorting = new DataQuickSorting();
+            dataQuickSorting.quickSortingTime = execution_time;
+            _context.dataQuickSortings.Add(dataQuickSorting);
+            _context.SaveChanges();
+
             return Ok(quickSortingViewModel);
         }
         /// <summary>

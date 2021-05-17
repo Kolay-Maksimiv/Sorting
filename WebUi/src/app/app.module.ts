@@ -8,6 +8,8 @@ import { SharedService} from './shared.service'
 import { HttpClientModule } from '@angular/common/http'
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { SortingComponent } from './sorting/sorting.component';
+import { NgxChartsModule }  from '@swimlane/ngx-charts';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
  
 @NgModule({
   declarations: [
@@ -19,8 +21,9 @@ import { SortingComponent } from './sorting/sorting.component';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
-
+    ReactiveFormsModule,
+    NgxChartsModule,
+    BrowserAnimationsModule 
   ],
   providers: [SharedService],
   bootstrap: [AppComponent]

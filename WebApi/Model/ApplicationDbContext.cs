@@ -11,9 +11,21 @@ namespace WebApi.Model
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
-            Database.EnsureCreated();
+
         }
 
-        public DbSet<Data> Datas { get; set; }
+        public DbSet<DataQuickSorting> dataQuickSortings { get; set; }
+        public DbSet<DataCombSort> dataCombSorts { get; set; }
+
+
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+
+            modelBuilder.Entity<DataQuickSorting>().ToTable("DataQuickSorting");
+
+            modelBuilder.Entity<DataCombSort>().ToTable("DataCombSort");
+
+        }
     }
 }

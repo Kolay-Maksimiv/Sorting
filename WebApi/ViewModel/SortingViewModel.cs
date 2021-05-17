@@ -2,7 +2,12 @@
 {
     public class SortingViewModel
     {
-        public object CombSortArray { get; set; }
-        public object QuickSortingArray { get; set; }
+        public object dataSoring { get; set; }
+        public object dataCombSorts { get; set; }
+
+        public object dataQuickSortings { get; set; }
+        public object combSortArray { get; set; }
+        public object quickSortingArray { get; set; }
     }
+
 }
