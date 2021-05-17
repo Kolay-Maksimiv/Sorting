@@ -5,17 +5,26 @@ export class SortingModel {
     public quickSortingArray?:  ArrayQuickSorting;
     public dataQuickSortings?: dataQuickSortings[];
     public dataCombSorts?: dataCombSorts[];
-    public dataSoring?: Result;
+    public dataSoring?: LineChartResponce<LineChartViewMode>;
 
 }
 
-export class Result {
-    public Datas?: Datas[];
-    public Total?: number;
+export class LineChartResponce<T> {
+    public data?: T[];
+    public total?: number;
 }
-export class Datas {
 
+export class LineChartViewMode {
+    public name?: string;
+    public nameValueViewMode?: NameValueViewMode;
 }
+
+export class NameValueViewMode {
+    public value?: number;
+    public name?: number;
+}
+
+
 
 
 export class dataQuickSortings {
@@ -36,7 +45,9 @@ export class ArrayQuickSorting {
 export class Value {
     public arrayCombSort?: any[];
     public arrayQuickSorting?: any[];
-    public executionTime?: number;
+    public combSortStep?: number;
+    public quickSortingStep?: number;
+    
 }
 
 

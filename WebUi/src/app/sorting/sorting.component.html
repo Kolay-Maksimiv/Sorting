@@ -2,18 +2,19 @@
     <div class="col-md-12">
         <div class="row">
             <div class="col-md-6">
-                <h1>Сортування гребінцем</h1>                
-                 {{ _combSortArray }}  
+                <h1 class="d-flex justify-content-center">Сортування гребінцем</h1>                
             </div>
             <div class="col-md-6">
-                <h1>Cортування Гоара </h1>
-                {{ _quickSortingArray }} 
+                <h1 class="d-flex justify-content-center">Cортування Гоара </h1>
+            </div>
+            <div class="col-md-12">
+                <h2 class="d-flex justify-content-center">{{ _combSortArray }}</h2>
             </div>
             <div class="col-md-6">
-               {{ _combSortArrayTime }}
+               <h3  class="d-flex justify-content-center"> Кроки  {{ _combSortStep }} </h3> 
             </div>
             <div class="col-md-6">
-                {{ _quickSortingArrayTime }}
+              <h3  class="d-flex justify-content-center">  Кроки {{ _quickSortingStep }}  </h3>  
             </div>
         </div>
     </div>
@@ -27,7 +28,7 @@
             [yAxis]="yAxis"
             [xAxisLabel]="xAxisLabel"
             [timeline]="timeline"
-            [results]="multi">
+            [results]="_dataCombSorts">
     </ngx-charts-line-chart>
 
 </div>

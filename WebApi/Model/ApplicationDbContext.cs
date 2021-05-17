@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApi.Model.Step;
 
 namespace WebApi.Model
 {
@@ -14,17 +15,16 @@ namespace WebApi.Model
 
         }
 
-        public DbSet<DataQuickSorting> dataQuickSortings { get; set; }
-        public DbSet<DataCombSort> dataCombSorts { get; set; }
+        public DbSet<CombSortStep> combSortSteps { get; set; }
+        public DbSet<QuickSortingStep> quickSortingSteps { get; set; }
 
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-            modelBuilder.Entity<DataQuickSorting>().ToTable("DataQuickSorting");
-
-            modelBuilder.Entity<DataCombSort>().ToTable("DataCombSort");
+            modelBuilder.Entity<CombSortStep>().ToTable("CombSortStep");
+            modelBuilder.Entity<QuickSortingStep>().ToTable("QuickSortingStep");
 
         }
     }

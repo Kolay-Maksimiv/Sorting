@@ -1,10 +1,9 @@
-﻿using System;
-
-namespace WebApi.ViewModel
+﻿namespace WebApi.ViewModel
 {
     public class QuickSortingViewModel
     {
         public int[] arrayQuickSorting { get; set; }
-        public double executionTime { get; set; }
+        public int quickSortingStep { get; set; }
     }
 }
+
