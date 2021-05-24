@@ -38,7 +38,7 @@ namespace WebApi.Controllers
             var sortingViewModel = new SortingViewModel()
             {
                 dataSoring = GetDataSoring(),
-                combSortArray = GetCombSort(RandomArray),
+                combSortArray = GetHeapSort(RandomArray),
                 quickSortingArray = GetQuickSorting(RandomArray)
             };
 
@@ -81,28 +81,6 @@ namespace WebApi.Controllers
 
             return dataSoring;
         }
-        //private IActionResult GetQuickSorting()
-        //{
-        //    Stopwatch clock = new Stopwatch();
-        //    clock.Start();
-        //    int[] QuickSortingArray = QuickSorting(RandomNumber());
-        //    clock.Stop();
-        //    double execution_time = (double)(clock.Elapsed.Ticks * 0.0001);
-
-        //    var quickSortingViewModel = new QuickSortingViewModel
-        //    {
-        //        arrayQuickSorting = QuickSortingArray,
-        //        executionTime = execution_time
-
-        //    };
-
-        //    var dataQuickSorting = new DataQuickSorting();
-        //    dataQuickSorting.quickSortingTime = execution_time;
-        //    _context.dataQuickSortings.Add(dataQuickSorting);
-        //    _context.SaveChanges();
-
-        //    return Ok(quickSortingViewModel);
-        //}
         /// <summary>
         /// RandomNumber
         /// </summary>
@@ -120,56 +98,47 @@ namespace WebApi.Controllers
         /// </summary>
         /// <param name="array"></param>
         /// <returns></returns>
-        private IActionResult GetCombSort(int[] array)
+        private IActionResult GetHeapSort(int[] array)
         {
-            var arrayLength = array.Length;
-            var currentStep = arrayLength - 1;
+
+            int n = array.Length;
             int step = 0;
-            while (currentStep > 1)
-            {
-                for (int i = 0; i + currentStep < array.Length; i++)
-                {
-                    if (array[i] > array[i + currentStep])
-                    {
-                        Swap(ref array[i], ref array[i + currentStep]);
-                        step++;
-                    }
+            for (int i = n / 2 - 1; i >= 0; i--)
+                heapify(array, n, i);
 
-                }
-                currentStep = GetNextStep(currentStep);
+            for (int i = n - 1; i > 0; i--)
+            {
+
+                int temp = array[0];
+                array[0] = array[i];
+                array[i] = temp;
+ 
+                heapify(array, i, 0);
             }
 
-            /// <summary>
-            /// сортування бульбашкою
-            /// </summary>
-            for (var i = 1; i < arrayLength; i++)
-            {
-                var swapFlag = false;
-                for (var j = 0; j < arrayLength - i; j++)
-                {
-                    if (array[j] > array[j + 1])
-                    {
-                        Swap(ref array[j], ref array[j + 1]);
-                        swapFlag = true;
-                    }
-                }
 
-                if (!swapFlag)
-                {
-                    break;
-                }
-            }
-            static void Swap(ref int value1, ref int value2)
+            void heapify(int[] arr, int n, int i)
             {
-                var temp = value1;
-                value1 = value2;
-                value2 = temp;
-            }
+                int largest = i;
+                int l = 2 * i + 1;
+                int r = 2 * i + 2;
 
-            static int GetNextStep(int s)
-            {
-                s = s * 1000 / 1247;
-                return s > 1 ? s : 1;
+                if (l < n && arr[l] > arr[largest])
+                    largest = l;
+
+
+                if (r < n && arr[r] > arr[largest])
+                    largest = r;
+                step++;
+
+                if (largest != i)
+                {
+                    int swap = arr[i];
+                    arr[i] = arr[largest];
+                    arr[largest] = swap;
+
+                    heapify(arr, n, largest);
+                }
             }
 
 
